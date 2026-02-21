@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Supremo ❤️</title>
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+overflow:hidden;
+background:black;
+color:white;
+text-align:center;
+}
+
+/* Tela de entrada */
+#telaEntrada{
+position:fixed;
+inset:0;
+background:linear-gradient(135deg,#ff4d6d,#ff758c);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:10;
+}
+
+input{
+padding:10px;
+border-radius:8px;
+border:none;
+margin-top:10px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+font-weight:bold;
+}
+
+#conteudo{
+display:none;
+padding:40px 20px;
+min-height:100vh;
+background:linear-gradient(135deg,#ff4d6d,#ff758c,#ffb3c6);
+background-size:400% 400%;
+animation:gradientMove 12s infinite alternate;
+overflow:auto;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
+}
+
+/* Cartinha */
+.carta{
+background:rgba(255,255,255,0.95);
+color:#333;
+padding:30px;
+border-radius:20px;
+max-width:700px;
+margin:20px auto;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+text-align:left;
+line-height:1.7;
+}
+
+.carta h1{
+text-align:center;
+color:#ff2e63;
+}
+
+h1 span{
+color:#ff2e63;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.1);}
+}
+
+#btnSim{
+background:#ff2e63;
+color:white;
+animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+from{box-shadow:0 0 10px #ff2e63;}
+to{box-shadow:0 0 30px #ff2e63;}
+}
+
+#btnNao{background:#ccc;}
+
+#respostaFinal{
+display:none;
+font-size:28px;
+color:#ff2e63;
+margin-top:20px;
+text-align:center;
+}
+
+/* slideshow */
+.slideshow{
+display:none;
+margin-top:20px;
+text-align:center;
+}
+.slideshow img{
+width:300px;
+border-radius:15px;
+}
+
+/* corações */
+.heart{
+position:fixed;
+bottom:-20px;
+animation:float 6s linear infinite;
+}
+@keyframes float{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-110vh);opacity:0;}
+}
+
+.secreta{
+margin-top:20px;
+cursor:pointer;
+color:#ff2e63;
+font-weight:bold;
+text-align:center;
+}
+
+/* Contador */
+#contador{
+margin-top:20px;
+font-size:20px;
+color:#ff2e63;
+text-align:center;
+}
+
+/* Mini player */
+#musicPlayer{
+position:fixed;
+bottom:20px;
+right:20px;
+background:rgba(255,255,255,0.9);
+padding:10px 15px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+display:flex;
+align-items:center;
+gap:10px;
+cursor:pointer;
+z-index:999;
+}
+#playBtn{font-size:20px;}
+</style>
+</head>
+
+<body>
+
+<!-- Tela de entrada -->
+<div id="telaEntrada">
+<h2>Digite o apelido secreto 💌</h2>
+<input type="password" id="senha">
+<button onclick="verificar()">Entrar</button>
+</div>
+
+<!-- Conteúdo principal -->
+<div id="conteudo">
+
+<div class="carta">
+<h1>Roberta, <span>eu te amo ❤️</span></h1>
+
+<p>Ontem foi nosso aniversário de 3 meses? acho que sim kkkkkk enfim, a gente tomou coragem e abriu o jogo um para o outro, e enfim permitiu que sejamos enfim os emocionados que nos tornamos hoje (que eu amo muito) kkkkkk.</p>
+
+<p>Fiz esse cantinho especial só para registrar o quanto você é importante pra mim e como aquele dia mudou tudo para melhor.</p>
+
+<p>A senhorita sabe que eu não sou muito bom escrevendo, mas quero que você saiba que você é o amor da minha vida e que eu não poderia imaginar um futuro sem você, e que farei desse pequeno site nosso cantinho, irei adicionar posteriormente fotos nossas e outras surpresinhas hehe.</p>
+
+<p>Você é a melhor parte da minha vida...</p>
+
+<hr>
+
+<h2 style="text-align:center;">Aceita namorar comigo? 💍</h2>
+
+<div style="text-align:center;">
+<button id="btnSim">Sim!</button>
+<button id="btnNao">Não</button>
+</div>
+
+<div id="respostaFinal">
+💍 Ela disse SIM! ❤️
+</div>
+
+<div id="contador"></div>
+
+<div class="slideshow" id="slideshow">
+<img id="slideImg" src="foto1.jpg">
+</div>
+
+<div class="secreta" onclick="alert('Eu te escolheria em todas as vidas ❤️')">
+💌 Clique aqui depois
+</div>
+
+</div>
+
+<!-- Mini player da música -->
+<div id="musicPlayer">
+  <div id="playBtn">▶️</div>
+  <div style="font-weight:bold;color:#ff2e63;">Arco e Flecha – Ferrugem</div>
+</div>
+
+<!-- YouTube invisível -->
+<iframe
+  id="ytPlayer"
+  width="0"
+  height="0"
+  src="https://www.youtube.com/embed/CaH-uet93o4?autoplay=1&loop=1&playlist=CaH-uet93o4"
+  frameborder="0"
+  allow="autoplay; encrypted-media"
+  allowfullscreen
+></iframe>
+
+<script>
+// Mini player com YouTube
+const musicPlayer = document.getElementById("musicPlayer");
+const playBtn = document.getElementById("playBtn");
+const ytPlayer = document.getElementById("ytPlayer");
+let tocando = false;
+
+musicPlayer.addEventListener("click", () => {
+  if(!tocando){
+    ytPlayer.src = ytPlayer.src.replace("autoplay=0","autoplay=1");
+    tocando = true;
+    playBtn.textContent = "⏸️";
+  } else {
+    ytPlayer.src = ytPlayer.src.replace("autoplay=1","autoplay=0");
+    tocando = false;
+    playBtn.textContent = "▶️";
+  }
+});
+
+// Senha
+const senhaCorreta="Momozi";
+
+function verificar(){
+const valor=document.getElementById("senha").value.toLowerCase();
+if(valor===senhaCorreta.toLowerCase()){
+document.getElementById("telaEntrada").style.display="none";
+document.getElementById("conteudo").style.display="block";
+startContador();
+}else{
+alert("Senha errada 😜");
+}
+}
+
+// Botão fujão
+const btnNao=document.getElementById("btnNao");
+btnNao.addEventListener("mouseover",()=>{
+btnNao.style.position="absolute";
+btnNao.style.left=Math.random()*80+"%";
+btnNao.style.top=Math.random()*80+"%";
+});
+
+// Sim + slideshow + fogos
+const btnSim=document.getElementById("btnSim");
+const respostaFinal=document.getElementById("respostaFinal");
+const slideshow=document.getElementById("slideshow");
+const slideImg=document.getElementById("slideImg");
+const fotos=["foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg"];
+let index=0;
+
+btnSim.addEventListener("click",()=>{
+    respostaFinal.style.display="block";
+    slideshow.style.display="block";
+
+    // inicia YouTube
+    if(!tocando){
+        ytPlayer.src = ytPlayer.src.replace("autoplay=0","autoplay=1");
+        tocando = true;
+        playBtn.textContent = "⏸️";
+    }
+
+    fogos();
+    setInterval(()=>{
+        index=(index+1)%fotos.length;
+        slideImg.src=fotos[index];
+    },3000);
+});
+
+// Corações
+function fogos(){
+for(let i=0;i<60;i++){
+let heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*30+20)+"px";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(heart);
+}
+}
+
+// Contador de tempo juntos
+function startContador(){
+const inicio=new Date("2025-12-21T00:00:00"); // data do começo de namoro
+const contador=document.getElementById("contador");
+function atualizar(){
+const agora=new Date();
+let diff=Math.floor((agora-inicio)/1000);
+let dias=Math.floor(diff/86400);
+diff%=86400;
+let horas=Math.floor(diff/3600);
+diff%=3600;
+let minutos=Math.floor(diff/60);
+let segundos=diff%60;
+contador.innerHTML=`Estamos juntos há: ${dias} dias ${horas}h ${minutos}m ${segundos}s`;
+}
+atualizar();
+setInterval(atualizar,1000);
+}
+</script>
+
+</body>
+</html>
