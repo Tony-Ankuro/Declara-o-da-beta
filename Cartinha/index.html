@@ -8,7 +8,7 @@
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-overflow:hidden;
+overflow-x:hidden; /* Correção: permite descer a página, bloqueia scroll lateral */
 background:black;
 color:white;
 text-align:center;
@@ -49,7 +49,7 @@ min-height:100vh;
 background:linear-gradient(135deg,#ff4d6d,#ff758c,#ffb3c6);
 background-size:400% 400%;
 animation:gradientMove 12s infinite alternate;
-overflow:auto;
+/* overflow:auto; <- Pode remover isso, a rolagem agora é do body */
 }
 
 @keyframes gradientMove{
@@ -95,7 +95,10 @@ from{box-shadow:0 0 10px #ff2e63;}
 to{box-shadow:0 0 30px #ff2e63;}
 }
 
-#btnNao{background:#ccc;}
+#btnNao{
+background:#ccc;
+z-index: 100; /* Garante que o botão não fique atrás de nada */
+}
 
 #respostaFinal{
 display:none;
@@ -114,6 +117,7 @@ text-align:center;
 .slideshow img{
 width:300px;
 border-radius:15px;
+max-width: 100%; /* Ajuste para não quebrar no celular */
 }
 
 /* corações */
@@ -121,6 +125,7 @@ border-radius:15px;
 position:fixed;
 bottom:-20px;
 animation:float 6s linear infinite;
+pointer-events: none; /* Para não atrapalhar o clique nos botões */
 }
 @keyframes float{
 0%{transform:translateY(0);opacity:1;}
@@ -164,14 +169,12 @@ z-index:999;
 
 <body>
 
-<!-- Tela de entrada -->
 <div id="telaEntrada">
 <h2>Digite o apelido secreto 💌</h2>
 <input type="password" id="senha">
 <button onclick="verificar()">Entrar</button>
 </div>
 
-<!-- Conteúdo principal -->
 <div id="conteudo">
 
 <div class="carta">
@@ -189,7 +192,7 @@ z-index:999;
 
 <h2 style="text-align:center;">Aceita namorar comigo? 💍</h2>
 
-<div style="text-align:center;">
+<div style="text-align:center; position: relative; min-height: 50px;">
 <button id="btnSim">Sim!</button>
 <button id="btnNao">Não</button>
 </div>
@@ -210,13 +213,11 @@ z-index:999;
 
 </div>
 
-<!-- Mini player da música -->
 <div id="musicPlayer">
   <div id="playBtn">▶️</div>
   <div style="font-weight:bold;color:#ff2e63;">Arco e Flecha – Ferrugem</div>
 </div>
 
-<!-- YouTube invisível -->
 <iframe
   id="ytPlayer"
   width="0"
@@ -262,10 +263,17 @@ alert("Senha errada 😜");
 
 // Botão fujão
 const btnNao=document.getElementById("btnNao");
-btnNao.addEventListener("mouseover",()=>{
-btnNao.style.position="absolute";
-btnNao.style.left=Math.random()*80+"%";
-btnNao.style.top=Math.random()*80+"%";
+// Compatibilidade extra para toque e mouse
+function moverBotao() {
+  btnNao.style.position="fixed"; // Agora ele usa fixed para sempre ficar visível na tela atual
+  btnNao.style.left=Math.random()*70+"vw"; // vw e vh garantem que ele pegue o tamanho da janela
+  btnNao.style.top=Math.random()*70+"vh";
+}
+
+btnNao.addEventListener("mouseover", moverBotao);
+btnNao.addEventListener("touchstart", (e) => {
+    e.preventDefault(); 
+    moverBotao();
 });
 
 // Sim + slideshow + fogos
@@ -279,6 +287,7 @@ let index=0;
 btnSim.addEventListener("click",()=>{
     respostaFinal.style.display="block";
     slideshow.style.display="block";
+    btnNao.style.display="none"; // Some com o botão não para limpar a tela
 
     // inicia YouTube
     if(!tocando){
