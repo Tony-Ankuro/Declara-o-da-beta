@@ -5,163 +5,254 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pedido Supremo ❤️</title>
 <style>
+:root {
+    --neon-red: #ff0033;
+}
+
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-overflow-x:hidden; /* Correção: permite descer a página, bloqueia scroll lateral */
+overflow-x:hidden;
 background:black;
 color:white;
 text-align:center;
 }
 
-/* Tela de entrada */
-#telaEntrada{
-position:fixed;
-inset:0;
-background:linear-gradient(135deg,#ff4d6d,#ff758c);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:10;
+/* Tartarugas decorativas (Aumentadas e por cima de tudo) */
+.decoracao{
+    position:fixed;
+    bottom:20px;
+    width:230px; /* Aumentado */
+    height:auto;
+    z-index:10; /* Maior que o da carta para ficar por cima */
+    opacity:1; /* Deixei 100% visível para destacar bem */
+    pointer-events:none;
+}
+.leitora{ left:10px; }
+.gamer{ right:10px; }
+
+@media(max-width:768px){
+    .decoracao{ width:150px; bottom:80px; } /* Aumentado no celular também */
+}
+
+/* Telas de bloqueio (Quiz e Senha) */
+.tela-bloqueio{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg, #0a0a0a 0%, #3a3a3a 100%);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    padding: 20px;
+}
+
+.tela-bloqueio h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: var(--neon-red);
+    text-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+}
+
+.tela-bloqueio p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    max-width: 400px;
+    color: #e0e0e0;
+}
+
+.tela-bloqueio label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+    color: white;
 }
 
 input{
-padding:10px;
-border-radius:8px;
-border:none;
-margin-top:10px;
+    padding:12px;
+    border-radius:8px;
+    border:none;
+    margin-top:8px;
+    width: 250px;
+    text-align: center;
+    font-size: 16px;
+    background: #f0f0f0;
+    color: #333;
+    outline: none;
+}
+input:focus {
+    box-shadow: 0 0 15px var(--neon-red);
 }
 
 button{
-padding:10px 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-margin-top:10px;
-font-weight:bold;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:25px;
+    font-weight:bold;
+    font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.btnAcao {
+    background-color: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 0, 51, 0.6); 
 }
 
 #conteudo{
-display:none;
-padding:40px 20px;
-min-height:100vh;
-background:linear-gradient(135deg,#ff4d6d,#ff758c,#ffb3c6);
-background-size:400% 400%;
-animation:gradientMove 12s infinite alternate;
-/* overflow:auto; <- Pode remover isso, a rolagem agora é do body */
+    display:none;
+    padding:40px 20px;
+    min-height:100vh;
+    background:linear-gradient(135deg, #0a0a0a, #2a2a2a, #141414);
+    background-size:400% 400%;
+    animation:gradientMove 15s infinite alternate;
+    position: relative;
+    z-index: 2;
 }
 
 @keyframes gradientMove{
-0%{background-position:0% 50%;}
-100%{background-position:100% 50%;}
+    0%{background-position:0% 50%;}
+    100%{background-position:100% 50%;}
 }
 
 /* Cartinha */
 .carta{
-background:rgba(255,255,255,0.95);
-color:#333;
-padding:30px;
-border-radius:20px;
-max-width:700px;
-margin:20px auto;
-box-shadow:0 15px 40px rgba(0,0,0,0.3);
-text-align:left;
-line-height:1.7;
+    background:rgba(255,255,255,0.95);
+    color:#333;
+    padding:30px;
+    border-radius:20px;
+    max-width:700px;
+    margin:20px auto;
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    text-align:left;
+    line-height:1.7;
+    position:relative;
+    z-index: 5; /* As tartarugas (z-index 10) vão ficar por cima dessa carta */
 }
 
 .carta h1{
-text-align:center;
-color:#ff2e63;
+    text-align:center;
+    color: var(--neon-red);
 }
 
 h1 span{
-color:#ff2e63;
-animation:pulse 1.5s infinite;
+    color: var(--neon-red);
+    text-shadow: 0 0 5px rgba(255, 0, 51, 0.3);
+    animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse{
-0%,100%{transform:scale(1);}
-50%{transform:scale(1.1);}
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+}
+
+#btnContinuar {
+    background: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 25px rgba(255, 0, 51, 0.7);
+}
+
+#areaPedido {
+    display: none;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px dashed var(--neon-red);
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 #btnSim{
-background:#ff2e63;
-color:white;
-animation:glow 2s infinite alternate;
+    background: var(--neon-red);
+    color:white;
+    animation:glow 2s infinite alternate;
 }
 @keyframes glow{
-from{box-shadow:0 0 10px #ff2e63;}
-to{box-shadow:0 0 30px #ff2e63;}
+    from{box-shadow:0 0 10px var(--neon-red);}
+    to{box-shadow:0 0 30px var(--neon-red), 0 0 50px var(--neon-red);} 
 }
 
 #btnNao{
-background:#ccc;
-z-index: 100; /* Garante que o botão não fique atrás de nada */
+    background:#e0e0e0;
+    color: #333;
+    z-index: 100;
 }
 
 #respostaFinal{
-display:none;
-font-size:28px;
-color:#ff2e63;
-margin-top:20px;
-text-align:center;
+    display:none;
+    font-size:28px;
+    color: var(--neon-red);
+    text-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+    margin-top:20px;
+    text-align:center;
 }
 
 /* slideshow */
 .slideshow{
-display:none;
-margin-top:20px;
-text-align:center;
+    display:none;
+    margin-top:20px;
+    text-align:center;
 }
 .slideshow img{
-width:300px;
-border-radius:15px;
-max-width: 100%; /* Ajuste para não quebrar no celular */
+    width:300px;
+    border-radius:15px;
+    max-width: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 /* corações */
 .heart{
-position:fixed;
-bottom:-20px;
-animation:float 6s linear infinite;
-pointer-events: none; /* Para não atrapalhar o clique nos botões */
+    position:fixed;
+    bottom:-20px;
+    animation:float 6s linear infinite;
+    pointer-events: none;
+    z-index: 990;
+    filter: drop-shadow(0 0 5px var(--neon-red));
 }
 @keyframes float{
-0%{transform:translateY(0);opacity:1;}
-100%{transform:translateY(-110vh);opacity:0;}
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-110vh);opacity:0;}
 }
 
 .secreta{
-margin-top:20px;
-cursor:pointer;
-color:#ff2e63;
-font-weight:bold;
-text-align:center;
+    margin-top:20px;
+    cursor:pointer;
+    color: var(--neon-red);
+    font-weight:bold;
+    text-align:center;
 }
 
-/* Contador */
 #contador{
-margin-top:20px;
-font-size:20px;
-color:#ff2e63;
-text-align:center;
+    margin-top:20px;
+    font-size:20px;
+    color: var(--neon-red);
+    text-align:center;
 }
 
-/* Mini player */
 #musicPlayer{
-position:fixed;
-bottom:20px;
-right:20px;
-background:rgba(255,255,255,0.9);
-padding:10px 15px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
-display:flex;
-align-items:center;
-gap:10px;
-cursor:pointer;
-z-index:999;
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:rgba(255,255,255,0.9);
+    padding:10px 15px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.5);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    z-index:999;
 }
 #playBtn{font-size:20px;}
 </style>
@@ -169,104 +260,145 @@ z-index:999;
 
 <body>
 
-<div id="telaEntrada">
-<h2>Digite o apelido secreto 💌</h2>
-<input type="password" id="senha">
-<button onclick="verificar()">Entrar</button>
+<div id="telaQuiz" class="tela-bloqueio">
+    <h2>Desafio Literário 📖</h2>
+    <p>Para desbloquear a surpresa, prove que você é fã de <strong>A Menina Feita de Espinhos</strong>:</p>
+
+    <label>1. Qual o nome da protagonista?</label>
+    <input type="text" id="resp1" placeholder="Nome dela..." onkeypress="if(event.key === 'Enter') verificarQuiz()">
+
+    <label>2. Qual o nome do cavalo dela?</label>
+    <input type="text" id="resp2" placeholder="Nome do cavalo..." onkeypress="if(event.key === 'Enter') verificarQuiz()">
+
+    <button class="btnAcao" onclick="verificarQuiz()">Avançar ➡️</button>
+</div>
+
+<div id="telaSenha" class="tela-bloqueio" style="display:none;">
+    <h2>Última Etapa 🔐</h2>
+    <p>Qual é o apelido que me transformou no emocionado de hoje?</p>
+    <input type="password" id="senha" placeholder="Digite nosso apelido..." onkeypress="if(event.key === 'Enter') verificarSenha()">
+    <button class="btnAcao" onclick="verificarSenha()">Desbloquear 🔓</button>
 </div>
 
 <div id="conteudo">
 
-<div class="carta">
-<h1>Roberta, <span>eu te amo ❤️</span></h1>
+    <img src="leitora-removebg-preview.png" class="decoracao leitora">
+    <img src="gamer-removebg-preview.png" class="decoracao gamer">
 
-<p>Ontem foi nosso aniversário de 3 meses? acho que sim kkkkkk enfim, a gente tomou coragem e abriu o jogo um para o outro, e enfim permitiu que sejamos enfim os emocionados que nos tornamos hoje (que eu amo muito) kkkkkk.</p>
+    <div class="carta">
+        <h1>Roberta, <span>eu te amo ❤️</span></h1>
 
-<p>Fiz esse cantinho especial só para registrar o quanto você é importante pra mim e como aquele dia mudou tudo para melhor.</p>
+        <p>Ontem foi nosso aniversário de 2 meses? acho que sim kkkkkk enfim, a gente tomou coragem e abriu o jogo um para o outro, e enfim permitiu que sejamos os emocionados que nos tornamos hoje (que eu amo muito) kkkkkk.</p>
 
-<p>A senhorita sabe que eu não sou muito bom escrevendo, mas quero que você saiba que você é o amor da minha vida e que eu não poderia imaginar um futuro sem você, e que farei desse pequeno site nosso cantinho, irei adicionar posteriormente fotos nossas e outras surpresinhas hehe.</p>
+        <p>Fiz esse cantinho especial só para registrar o quanto você é importante pra mim e como aquele dia mudou tudo para melhor.</p>
 
-<p>Você é a melhor parte da minha vida...</p>
+        <p>A senhorita sabe que eu não sou muito bom escrevendo, mas quero que você saiba que você é o amor da minha vida e que eu não poderia imaginar um futuro sem você, e que farei desse pequeno site nosso cantinho, irei adicionar posteriormente fotos nossas e outras surpresinhas hehe.</p>
 
-<hr>
+        <p>Você é a melhor parte da minha vida...</p>
 
-<h2 style="text-align:center;">Aceita namorar comigo? 💍</h2>
+        <div id="btnContinuarContainer" style="text-align:center; margin-top: 30px;">
+            <button id="btnContinuar" onclick="mostrarPedido()">Tem mais uma coisinha pra você ler...</button>
+        </div>
 
-<div style="text-align:center; position: relative; min-height: 50px;">
-<button id="btnSim">Sim!</button>
-<button id="btnNao">Não</button>
-</div>
+        <div id="areaPedido">
+            <h2 style="text-align:center;">Aceita renovar nossa declaração para mais um ano e namorar comigo? (mesmo sem aliança kkkkk) 💍</h2>
 
-<div id="respostaFinal">
-💍 Ela disse SIM! ❤️
-</div>
+            <div style="text-align:center; position: relative; min-height: 50px; margin-top: 20px;">
+                <button id="btnSim">Sim!</button>
+                <button id="btnNao">Não</button>
+            </div>
+        </div>
 
-<div id="contador"></div>
+        <div id="respostaFinal">
+            💍 Ela disse SIM! ❤️
+        </div>
 
-<div class="slideshow" id="slideshow">
-<img id="slideImg" src="foto1.jpg">
-</div>
+        <div id="contador"></div>
 
-<div class="secreta" onclick="alert('Eu te escolheria em todas as vidas ❤️')">
-💌 Clique aqui depois
-</div>
+        <div class="slideshow" id="slideshow">
+            <img id="slideImg" src="foto1.jpg">
+        </div>
+
+        <div class="secreta" onclick="alert('Eu te escolheria em todas as vidas ❤️')">
+            💌 Clique aqui depois
+        </div>
+
+    </div>
 
 </div>
 
 <div id="musicPlayer">
   <div id="playBtn">▶️</div>
-  <div style="font-weight:bold;color:#ff2e63;">Arco e Flecha – Ferrugem</div>
+  <div style="font-weight:bold;color:#ff0033;">Arco e Flecha – Ferrugem</div>
 </div>
 
-<iframe
-  id="ytPlayer"
-  width="0"
-  height="0"
-  src="https://www.youtube.com/embed/CaH-uet93o4?autoplay=1&loop=1&playlist=CaH-uet93o4"
-  frameborder="0"
-  allow="autoplay; encrypted-media"
-  allowfullscreen
-></iframe>
+<audio id="meuAudio" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+</audio>
 
 <script>
-// Mini player com YouTube
+// Controle do Áudio Local
 const musicPlayer = document.getElementById("musicPlayer");
 const playBtn = document.getElementById("playBtn");
-const ytPlayer = document.getElementById("ytPlayer");
+const meuAudio = document.getElementById("meuAudio");
 let tocando = false;
 
 musicPlayer.addEventListener("click", () => {
   if(!tocando){
-    ytPlayer.src = ytPlayer.src.replace("autoplay=0","autoplay=1");
+    meuAudio.play();
     tocando = true;
     playBtn.textContent = "⏸️";
   } else {
-    ytPlayer.src = ytPlayer.src.replace("autoplay=1","autoplay=0");
+    meuAudio.pause();
     tocando = false;
     playBtn.textContent = "▶️";
   }
 });
 
-// Senha
+// Verificação do Quiz do Livro (Etapa 1)
+function verificarQuiz(){
+    const r1 = document.getElementById("resp1").value.trim().toLowerCase();
+    const r2 = document.getElementById("resp2").value.trim().toLowerCase();
+
+    if(r1.includes("kat") && r2.includes("joaquim")){
+        document.getElementById("telaQuiz").style.display="none";
+        document.getElementById("telaSenha").style.display="flex"; 
+    } else {
+        alert("Ops! Resposta errada 😜 Dica: A protagonista começa com K e o cavalo com J!");
+    }
+}
+
+// Verificação da Senha (Etapa 2)
 const senhaCorreta="Momozi";
 
-function verificar(){
-const valor=document.getElementById("senha").value.toLowerCase();
-if(valor===senhaCorreta.toLowerCase()){
-document.getElementById("telaEntrada").style.display="none";
-document.getElementById("conteudo").style.display="block";
-startContador();
-}else{
-alert("Senha errada 😜");
+function verificarSenha(){
+    const valor=document.getElementById("senha").value.trim().toLowerCase();
+    if(valor===senhaCorreta.toLowerCase()){
+        document.getElementById("telaSenha").style.display="none";
+        document.getElementById("conteudo").style.display="block";
+        startContador();
+    }else{
+        alert("Senha errada 😜 Pensa bem no nosso apelido!");
+    }
 }
+
+// Mostrar a área do pedido de namoro
+function mostrarPedido() {
+    document.getElementById("btnContinuarContainer").style.display = "none";
+    const area = document.getElementById("areaPedido");
+    area.style.display = "block";
+    
+    setTimeout(() => {
+        area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
 }
 
 // Botão fujão
 const btnNao=document.getElementById("btnNao");
-// Compatibilidade extra para toque e mouse
 function moverBotao() {
-  btnNao.style.position="fixed"; // Agora ele usa fixed para sempre ficar visível na tela atual
-  btnNao.style.left=Math.random()*70+"vw"; // vw e vh garantem que ele pegue o tamanho da janela
+  btnNao.style.position="fixed"; 
+  btnNao.style.left=Math.random()*70+"vw";
   btnNao.style.top=Math.random()*70+"vh";
 }
 
@@ -287,11 +419,13 @@ let index=0;
 btnSim.addEventListener("click",()=>{
     respostaFinal.style.display="block";
     slideshow.style.display="block";
-    btnNao.style.display="none"; // Some com o botão não para limpar a tela
+    btnNao.style.display="none";
+    document.getElementById("areaPedido").querySelector("h2").style.display = "none";
+    btnSim.style.display = "none";
 
-    // inicia YouTube
+    // Toca a música automaticamente ao dizer "Sim" caso ainda não esteja tocando
     if(!tocando){
-        ytPlayer.src = ytPlayer.src.replace("autoplay=0","autoplay=1");
+        meuAudio.play();
         tocando = true;
         playBtn.textContent = "⏸️";
     }
@@ -318,7 +452,7 @@ document.body.appendChild(heart);
 
 // Contador de tempo juntos
 function startContador(){
-const inicio=new Date("2025-12-21T00:00:00"); // data do começo de namoro
+const inicio=new Date("2025-12-21T00:00:00"); 
 const contador=document.getElementById("contador");
 function atualizar(){
 const agora=new Date();
